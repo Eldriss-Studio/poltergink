@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "biomejs.biome",
+    "astro-build.astro-vscode",
+    "alexkrechik.cucumberautocomplete",
+    "vitest.explorer",
+    "editorconfig.editorconfig"
+  ]
+}

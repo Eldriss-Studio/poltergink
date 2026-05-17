@@ -1,0 +1,15 @@
+{
+  "$schema": "https://unpkg.com/knip@latest/schema.json",
+  "entry": ["src/index.ts"],
+  "project": ["src/**/*.ts"],
+  "ignore": ["dist/**", "docs/**", "coverage/**", "cucumber.js"],
+  "ignoreDependencies": [
+    "@arethetypeswrong/cli",
+    "@commitlint/cli",
+    "@commitlint/config-conventional",
+    "lefthook",
+    "ai",
+    "inkjs",
+    "zod"
+  ]
+}
