@@ -37,17 +37,42 @@ Unit tests alone are not a substitute for an acceptance test. If your change has
 
 ## Commit messages
 
-We use [Conventional Commits](https://www.conventionalcommits.org/). Common prefixes:
+This repo follows the **Tardigrade-style gitmoji + Conventional Commits** convention used across [Eldriss-Studio](https://github.com/Eldriss-Studio) projects ([tardigrade-db reference](https://github.com/Eldriss-Studio/tardigrade-db/blob/main/CONTRIBUTING.md#commit-message-format)).
 
-- `feat:` — new user-visible capability
-- `fix:` — bug fix
-- `docs:` — docs-only change
-- `chore:` — repo plumbing
-- `refactor:` — code change without behavior change
-- `test:` — tests only
-- `perf:` — performance change
+**Format:**
 
-Commitlint enforces this once task 1 lands.
+```
+[emoji] type(scope): subject
+
+[optional body]
+
+[optional footer(s)]
+```
+
+The leading emoji is **mandatory**. Use the gitmoji that matches the change intent — see [gitmoji.dev](https://gitmoji.dev). Common pairings used in this project:
+
+| Emoji | Type | When |
+|---|---|---|
+| ✨ | `feat` | new user-visible capability |
+| 🐛 | `fix` | bug fix |
+| 📝 | `docs` | documentation only |
+| ♻️ | `refactor` | non-feature, non-fix code change |
+| 🧪 | `test` | tests only |
+| ⚡ | `perf` | performance change |
+| 🧹 | `chore` | tidying / hygiene |
+| 🔧 | `chore` | tooling, config, CI |
+| 🔖 | `release` | version bump (via Changesets) |
+
+**Examples:**
+
+- `✨ feat(player): add tag-driven persona switching`
+- `🐛 fix(story): clamp choice index to currentChoices.length`
+- `📝 docs(adr): add ADR-0003 superseding stack decision`
+- `🧪 test(session): cover end-of-story edge case`
+- `🧹 chore: drop unused exports flagged by knip`
+- `🔧 chore(ci): pin actions/setup-node to v4`
+
+Commitlint enforces both the leading emoji (any Extended_Pictographic codepoint, including ZWJ sequences) and the `type(scope): subject` shape on every commit message. The configured types are: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`, `build`, `ci`, `revert`, `release`.
 
 ## Branching and PRs
 
