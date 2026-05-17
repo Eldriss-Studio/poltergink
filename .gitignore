@@ -1,0 +1,58 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+build/
+*.tsbuildinfo
+
+# Test coverage
+coverage/
+.nyc_output/
+*.lcov
+
+# Vitest cache
+.vitest/
+
+# Cucumber output
+.cucumber/
+cucumber-report.*
+
+# tsup / esbuild
+.tsup/
+
+# TypeDoc generated output
+docs/api/
+
+# Astro / Starlight
+.astro/
+docs/dist/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+
+# Local fixtures / scratch
+*.local
+.scratch/
+
+# Packed tarballs
+*.tgz
