@@ -1,0 +1,13 @@
+# CODEOWNERS for poltergink
+# Routes GitHub review requests automatically. Format:
+#   <pattern>  <owner...>
+# See https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default — everything routes to the project owner.
+*                       @flagrare
+
+# Architecture Decision Records — extra care; same owner today.
+/docs/decisions/        @flagrare
+
+# CI and repo plumbing.
+/.github/               @flagrare
