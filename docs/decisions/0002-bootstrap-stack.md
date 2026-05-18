@@ -1,6 +1,6 @@
 # ADR-0002: Bootstrap stack for `poltergink`
 
-- **Status:** Accepted
+- **Status:** Accepted (ATDD-framework choice superseded by [ADR-0003](./0003-vitest-only-testing.md); rest of the stack stands)
 - **Date:** 2026-05-17
 - **Deciders:** @flagrare
 - **Supersedes:** —

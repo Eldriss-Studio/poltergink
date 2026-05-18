@@ -24,16 +24,26 @@ pnpm verify   # the full local quality gate — same checks as CI
 
 > *Note:* `pnpm verify` and the scripts it runs become available once task 1 (the scaffold) lands. Until then, this repo contains only the decision substrate and hygiene files.
 
-## How we work — ATDD-first
+## How we work — ATDD-first, Kent-style
 
-`poltergink` is built **acceptance-test-driven**. For any user-visible behavior:
+`poltergink` is built **acceptance-test-driven**. The framework is **Vitest** with behaviour-named `describe` / `it` blocks (see [ADR-0003](./docs/decisions/0003-vitest-only-testing.md)). The workflow for any user-visible behaviour:
 
-1. **Write the Gherkin feature first** under `features/`, expressing the behavior in Given/When/Then. Watch it fail.
-2. **Implement** until the feature is green.
-3. **Add unit tests** (Vitest) for the seams worth pinning down at a finer grain.
-4. **Update docs** — at minimum a TSDoc comment on any new exported symbol; recipes/concepts pages for new user-facing capability.
+1. **Write the Vitest test first** under `tests/` (or co-located as `*.test.ts`), expressing the behaviour in the test name. Watch it fail.
+2. **Implement** until the test passes.
+3. **Refactor** — clean up naming, structure, duplication. Re-run.
+4. **Gap review** — missing edge cases, untested paths, error shapes. Add tests for any gaps.
+5. **Update docs** — at minimum TSDoc on any new exported symbol; recipes/concepts pages for new user-facing capability.
 
-Unit tests alone are not a substitute for an acceptance test. If your change has no behavior worth describing in Gherkin, the change is probably either internal refactor (no new tests needed beyond keeping existing ones green) or too small to need a PR.
+### What good tests look like here
+
+- **Test through the public API.** Don't reach into private state. If a test needs to, the public API is missing something — fix the API first.
+- **Default to integration over unit.** Use the real `Story` from a fixture `.ink`, the real `Session`, the real `Transcript`. Mock only at *external* boundaries (the LLM provider).
+- **Name the behaviour, not the method.** `it("rejects an out-of-range choice index with StoryChoiceRangeError")` beats `it("choose throws")`.
+- **Assert on contracts, not strings.** `expect(err).toBeInstanceOf(StoryChoiceRangeError)` and on its public properties — not `expect(err.message).toBe("…")`.
+- **AHA over `beforeEach`.** Prefer an inline `setup()` factory returning sane defaults that each test overrides only where it differs.
+- **Coverage is a smell detector, not a target.** 100% line coverage with no use-case coverage is worthless.
+
+Tests that only exercise implementation details (private methods, internal state shapes, the order internal collaborators are called) are not welcome — they create refactor friction without giving real confidence.
 
 ## Commit messages
 

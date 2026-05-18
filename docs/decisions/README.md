@@ -7,7 +7,8 @@ This directory holds the project's Architecture Decision Records (ADRs) in the [
 | ID | Status | Title |
 |---|---|---|
 | [0001](./0001-mission-and-scope.md) | Accepted | Mission and scope of `poltergink` |
-| [0002](./0002-bootstrap-stack.md) | Accepted | Bootstrap stack for `poltergink` |
+| [0002](./0002-bootstrap-stack.md) | Accepted (ATDD framework superseded by 0003) | Bootstrap stack for `poltergink` |
+| [0003](./0003-vitest-only-testing.md) | Accepted | Vitest-only testing, Kent C. Dodds–style |
 
 ## Adding a new ADR
 
