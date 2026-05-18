@@ -12,8 +12,17 @@
 
 export type { Decision, Player, Turn, TurnContext } from "./player.ts";
 export { ScriptExhaustedError, ScriptedPlayer } from "./players/scripted.ts";
-export { Session, type SessionOptions, type SessionResult } from "./session.ts";
+export {
+  Session,
+  type SessionEvent,
+  type SessionEventListener,
+  type SessionEventOf,
+  SessionMaxTurnsError,
+  type SessionOptions,
+  type SessionUnsubscribe,
+} from "./session.ts";
 export { type Choice, type Scene, Story, StoryChoiceRangeError } from "./story.ts";
+export type { Transcript, TurnRecord } from "./transcript.ts";
 
 /**
  * The library's version string. Bumped via Changesets at release time.

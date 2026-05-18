@@ -7,7 +7,7 @@
 
 `poltergink` makes Inkle's [Ink](https://github.com/inkle/ink) narrative engine **two-sided**: instead of a human picking branches, an LLM holds a persona, reads the unfolding story, and is *forced* to pick from the author-defined `currentChoices`. No freeform text, no off-script generation — just constrained choice selection over a real narrative graph.
 
-> **Status:** Early development. The `Story` facade, the `Player` interface with `ScriptedPlayer`, and the `Session` orchestrator loop are shipped and tested. `LLMPlayer`, `Persona`, and a full `Transcript` model are next.
+> **Status:** Early development. The `Story` facade, the `Player` interface with `ScriptedPlayer`, the `Session` orchestrator with typed event emission, and the `Transcript` (with per-turn snapshots) are shipped and tested. `LLMPlayer` and `Persona` are next.
 
 ## What's available
 
@@ -76,6 +76,43 @@ console.log(result.finalScene);  // the ended scene (closing narrative, ended ==
 
 **`ScriptExhaustedError`** carries `.scriptLength` and `.turnIndex` so callers can pinpoint exactly where the script ran out.
 
+### `Transcript` + typed events
+
+`Session.run()` returns a frozen `Transcript`: every turn includes the scene shown, the decision made, and full state snapshots before and after the choice. Snapshots are inkjs `state.ToJson` blobs — round-trippable via `Story.restore`, so any turn can be replayed from a fresh story.
+
+```ts
+const transcript = await session.run();
+
+// Every TurnRecord is immutable.
+for (const turn of transcript.turns) {
+  console.log(`turn ${turn.index}: chose ${turn.decision.choiceIndex}`);
+
+  // Replay from this exact branch point on a fresh story.
+  const replay = Story.fromInk(source);
+  replay.restore(turn.snapshotBefore);
+  // replay.advance() now sees the same scene `turn.scene` saw.
+}
+
+console.log(transcript.finalScene.text);   // closing narrative
+console.log(transcript.finalSnapshot);     // post-end state JSON
+```
+
+`Session` also emits typed events during the run — useful for live UIs, instrumentation, or feeding an LLM context-window with what's just happened:
+
+```ts
+const unsubscribe = session.on("choice:made", (e) => {
+  console.log(`turn ${e.turnIndex}: ${e.record.decision.choiceIndex}`);
+});
+// unsubscribe() to stop listening.
+
+session.on("turn:start", (e) => { /* … */ });
+session.on("story:ended", (e) => console.log(e.finalScene.text));
+```
+
+`SessionEvent` is a discriminated union (`turn:start` | `choice:made` | `story:ended`) — `e.type === "choice:made"` narrows to the record-carrying variant.
+
+`Session` accepts an optional `maxTurns` cap. If exceeded it throws `SessionMaxTurnsError` carrying the partial `Transcript` — useful as a runaway-loop safety net or in tests against unfamiliar stories.
+
 ### Tag-driven routing
 
 Ink tags flow through at two levels: passage tags appear on `Scene.tags` after each `advance()`; choice tags (written before the choice's bracketed text) appear on `Choice.tags` at decision time. The `PersonaDirector` (coming in v0) will read these to select a persona at the branch point.
@@ -93,10 +130,11 @@ A stranger approaches. # mood:tense
 - [x] `Story` facade over `inkjs` — `.fromInk`, `.fromJson`, `.advance`, `.choose`, `.snapshot`, `.restore`
 - [x] `Player` interface — `Player`, `TurnContext`, `Decision`, `Turn`
 - [x] `ScriptedPlayer` — deterministic, for tests and reproducible demos
-- [x] `Session` orchestrator — drives a `Story` × `Player` to completion, returns `SessionResult`
+- [x] `Session` orchestrator — drives a `Story` × `Player` to completion
+- [x] `Transcript` — per-turn snapshots, replay from any turn
+- [x] Typed `Session` events — `turn:start`, `choice:made`, `story:ended`
 - [ ] `LLMPlayer` — Vercel AI SDK + Zod-constrained output
 - [ ] `Persona` + `PersonaDirector` — tag-driven persona switching mid-session
-- [ ] `Transcript` — typed turn events, per-turn snapshots, replay
 - [ ] Astro Starlight docs site with TypeDoc-generated API reference
 
 ## Design references
