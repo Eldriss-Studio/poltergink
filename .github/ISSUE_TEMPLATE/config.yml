@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/Eldriss-Studio/poltergink/security/advisories/new
+    about: Please report vulnerabilities privately via a Security Advisory (or see SECURITY.md).
+  - name: Question or discussion
+    url: https://github.com/Eldriss-Studio/poltergink/discussions
+    about: Open-ended questions, ideas, or design discussion — not a concrete bug or feature request.

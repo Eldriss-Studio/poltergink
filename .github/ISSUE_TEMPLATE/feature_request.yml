@@ -1,0 +1,60 @@
+name: Feature request
+description: Propose a capability `poltergink` doesn't have
+title: "✨ "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Tell us the *problem*, not the *solution*. The best feature requests describe a real friction you hit — we'll often find a better fix than the one you imagined.
+
+        Before opening: check the ADRs in [`docs/decisions/`](https://github.com/Eldriss-Studio/poltergink/tree/main/docs/decisions). Some things are deliberately out of scope (e.g., LLM-as-author content generation — see ADR-0001).
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What were you trying to do? What got in the way? Concrete examples beat abstractions.
+      placeholder: "I'm building a CYOA agent that needs to … but currently `poltergink` …"
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal (optional)
+      description: If you have a shape in mind — sketch the API, the config, the persona contract change, whatever. Pseudocode is fine.
+      render: typescript
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Workarounds you tried, other libraries you looked at, hand-rolled approaches that didn't fit.
+
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Where this belongs
+      description: Your best guess; we'll re-route if needed.
+      options:
+        - Story facade (inkjs wrapper)
+        - Player (LLMPlayer / ScriptedPlayer / new)
+        - Persona / Director
+        - Session / Transcript / events
+        - Provider adapter (Anthropic / OpenAI / Ollama / …)
+        - Docs / examples
+        - Tooling (CI, build, tests)
+        - Not sure
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: triage
+    attributes:
+      label: Triage
+      options:
+        - label: I searched existing issues and didn't find a duplicate
+          required: true
+        - label: I read the relevant ADRs and this isn't already decided against
+          required: true

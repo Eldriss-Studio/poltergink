@@ -1,0 +1,103 @@
+name: Bug report
+description: Something `poltergink` does wrong or doesn't do
+title: "🐛 "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. The faster we can reproduce, the faster we can fix.
+        Please include a minimal `.ink` (or compiled `.json`) snippet and the exact API call sequence.
+
+  - type: input
+    id: poltergink-version
+    attributes:
+      label: poltergink version
+      placeholder: "e.g. 0.1.0 or commit SHA"
+    validations:
+      required: true
+
+  - type: input
+    id: node-version
+    attributes:
+      label: Node version
+      placeholder: "e.g. 22.4.1"
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: OS / runtime
+      placeholder: "e.g. Ubuntu 24.04, macOS 15, or browser"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: llm-provider
+    attributes:
+      label: LLM provider involved
+      description: Pick the closest one. Use "N/A" for bugs that don't involve the LLM layer (Story facade, Session, etc.).
+      options:
+        - N/A (not LLM-related)
+        - Anthropic
+        - OpenAI
+        - Google (Gemini)
+        - Ollama (local)
+        - LM Studio (local)
+        - vLLM (local)
+        - Other OpenAI-compatible
+        - Multiple / unsure
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What did you observe? Include error messages, stack traces, and the relevant slice of the `Transcript` if you have one.
+      placeholder: "On the third advance() call the session threw … / the LLM picked an index outside currentChoices.length / …"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal reproduction
+      description: |
+        Paste a tiny `.ink` (or `.json`) snippet and the API call sequence that reproduces the bug.
+        If the bug is non-deterministic, include the seed / model name / temperature you used.
+      render: typescript
+      placeholder: |
+        // story.ink (or pre-compiled JSON)
+        // → say what you'd expect to see
+
+        const story = await Story.fromInk(source);
+        const session = new Session({ story, player });
+        await session.run();
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / transcript
+      description: Optional. Output of `session.transcript`, stack traces, or relevant CI logs.
+      render: shell
+
+  - type: checkboxes
+    id: triage
+    attributes:
+      label: Triage
+      options:
+        - label: I searched existing issues and didn't find a duplicate
+          required: true
+        - label: I tried with the latest `main` (not just the published version)
+        - label: The bug is in `poltergink` itself, not in inkjs / Vercel AI SDK / my LLM provider
