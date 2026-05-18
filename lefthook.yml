@@ -1,12 +1,36 @@
+# Lefthook hooks. Goal: local hooks catch what CI catches, so a successful
+# `git push` implies a green CI run. Split by hook so commits stay fast and
+# the heavy gate runs once at push time.
+#
+# Pre-commit  (fast,   < 5s on incremental changes):
+#   - biome  — lint + format on staged files
+#   - tsdoc  — TSDoc syntax check on staged TS files
+#   - typecheck — whole-project tsc (fast on incremental, no emit)
+#
+# Pre-push   (heavy,  ~30s+):
+#   - pnpm verify — the same chain CI runs (typecheck, lint, lint:tsdoc,
+#                   knip, vitest+coverage, cucumber, build, publint)
+#
+# Commit-msg:
+#   - commitlint — enforces the tardigrade gitmoji format
+
 pre-commit:
   parallel: true
   commands:
     biome:
       glob: "*.{ts,tsx,js,json,md}"
       run: pnpm biome check --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
+    tsdoc:
+      glob: "src/**/*.ts"
+      run: pnpm exec eslint --no-warn-ignored {staged_files}
     typecheck:
       glob: "*.{ts,tsx}"
       run: pnpm typecheck
+
+pre-push:
+  commands:
+    verify:
+      run: pnpm verify
 
 commit-msg:
   commands:
