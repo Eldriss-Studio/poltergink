@@ -1,8 +1,26 @@
 name: Release
 
+# Muted at v0.0.0 — the package is marked `"private": true` and there is
+# nothing to publish to npm yet. The workflow stays in the repo, fully
+# configured, so it can be re-enabled in one diff when v0.1.0 is ready.
+#
+# To revive auto-release on push to main:
+#   1. Change the trigger below from `workflow_dispatch:` back to
+#        push:
+#          branches: [main]
+#   2. Flip `"private": true` → remove (or set to `false`) in package.json.
+#   3. EITHER enable "Allow GitHub Actions to create and approve pull
+#      requests" at the org/repo level, OR swap secrets.GITHUB_TOKEN for
+#      a fine-grained PAT (Contents: rw, Pull requests: rw) under a new
+#      secret name like RELEASE_TOKEN.
+#   4. If publishing to npm, set up trusted publishing (recommended) at
+#      https://docs.npmjs.com/trusted-publishers OR add an NPM_TOKEN
+#      repo secret.
+#
+# Until then, this workflow only runs when manually dispatched from the
+# Actions tab — so it doesn't redden CI on every push.
 on:
-  push:
-    branches: [main]
+  workflow_dispatch:
 
 concurrency:
   group: release-${{ github.ref }}
