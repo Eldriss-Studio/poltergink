@@ -143,6 +143,7 @@ A stranger approaches. # mood:tense
 - **[ADR-0002 — Bootstrap stack](./docs/decisions/0002-bootstrap-stack.md)** — the full toolchain: Vercel AI SDK, tsup, Biome, Vitest, Changesets.
 - **[ADR-0003 — Vitest-only testing](./docs/decisions/0003-vitest-only-testing.md)** — why Cucumber was dropped in favour of behaviour-named Vitest tests.
 - **[Decision records index](./docs/decisions/README.md)** — all ADRs and how to add one.
+- **[Research log](./docs/research/README.md)** — external research that informed the design (LLM persona patterns, emotion + memory models, Ink event emission). The evidence base behind the decisions.
 
 ## Contributing
 
