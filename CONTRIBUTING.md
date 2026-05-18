@@ -63,16 +63,24 @@ The leading emoji is **mandatory**. Use the gitmoji that matches the change inte
 | 🔧 | `chore` | tooling, config, CI |
 | 🔖 | `release` | version bump (via Changesets) |
 
+**Subject style — a tight topical noun phrase, not an imperative sentence.** Treat the subject as a *label* for the change, not a description of what you did. The body is where you explain.
+
+| Good | Avoid |
+|---|---|
+| `🐛 fix(bench/prep): LongMemEval gold` | `🐛 fix: corrected the LongMemEval gold dataset preprocessing step` |
+| `🔧 chore(scaffold): TS project + quality gate` | `🔧 chore: scaffold TypeScript project with full quality stack` |
+| `✨ feat(player): tag-driven persona switching` | `✨ feat: add support for switching personas based on Ink tags` |
+
 **Examples:**
 
-- `✨ feat(player): add tag-driven persona switching`
-- `🐛 fix(story): clamp choice index to currentChoices.length`
-- `📝 docs(adr): add ADR-0003 superseding stack decision`
-- `🧪 test(session): cover end-of-story edge case`
-- `🧹 chore: drop unused exports flagged by knip`
-- `🔧 chore(ci): pin actions/setup-node to v4`
+- `✨ feat(player): tag-driven persona switching`
+- `🐛 fix(story): clamp out-of-range choice index`
+- `📝 docs(adr): ADR-0003 supersede stack decision`
+- `🧪 test(session): end-of-story edge case`
+- `🧹 chore: knip unused-export cleanup`
+- `🔧 chore(ci): pin actions/setup-node@v4`
 
-Commitlint enforces both the leading emoji (any Extended_Pictographic codepoint, including ZWJ sequences) and the `type(scope): subject` shape on every commit message. The configured types are: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`, `build`, `ci`, `revert`, `release`.
+Commitlint enforces both the leading emoji (any Extended_Pictographic codepoint, including ZWJ sequences) and the `type(scope): subject` shape on every commit message. Subjects over ~50 chars get a warning (not a block) — that's the punchy-noun-phrase nudge. The configured types are: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`, `build`, `ci`, `revert`, `release`.
 
 ## Branching and PRs
 

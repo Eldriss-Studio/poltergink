@@ -13,6 +13,11 @@
  *   ⚡ perf(session):   performance
  *   🔖 release:         version bump (changesets)
  *
+ * Subject style: a tight topical noun phrase, not an imperative sentence.
+ *   Good: `🐛 fix(bench/prep): LongMemEval gold`
+ *   Good: `🔧 chore(scaffold): TS project + quality gate`
+ *   Avoid: `🔧 chore: scaffold TypeScript project with full quality stack`
+ *
  * The emoji is mandatory. See gitmoji.dev for the full reference, and the
  * project mirror at https://github.com/Eldriss-Studio/tardigrade-db
  * (CONTRIBUTING.md → "Commit Message Format").
@@ -55,5 +60,8 @@ export default {
     "type-case": [2, "always", "lower-case"],
     "subject-case": [0],
     "header-max-length": [2, "always", 100],
+    // Soft cap on subject length to encourage punchy noun-phrase style.
+    // Warns at 50 chars; doesn't block.
+    "subject-max-length": [1, "always", 50],
   },
 };
