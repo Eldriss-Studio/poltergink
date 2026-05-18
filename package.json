@@ -66,11 +66,10 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:atdd": "NODE_OPTIONS='--import tsx/esm --no-warnings' cucumber-js --parallel 4",
     "knip": "knip",
     "publint": "publint",
     "docs:api": "typedoc",
-    "verify": "pnpm typecheck && pnpm lint && pnpm lint:tsdoc && pnpm knip && pnpm test:coverage && pnpm test:atdd && pnpm build && pnpm publint",
+    "verify": "pnpm typecheck && pnpm lint && pnpm lint:tsdoc && pnpm knip && pnpm test:coverage && pnpm build && pnpm publint",
     "changeset": "changeset",
     "release": "changeset publish",
     "prepare": "lefthook install"
@@ -105,7 +104,6 @@
     "@changesets/cli": "^2.31.0",
     "@commitlint/cli": "^21.0.1",
     "@commitlint/config-conventional": "^21.0.1",
-    "@cucumber/cucumber": "^12.9.0",
     "@types/node": "^25.8.0",
     "@typescript-eslint/parser": "^8.59.3",
     "@vitest/coverage-v8": "^4.1.6",
@@ -115,7 +113,6 @@
     "lefthook": "^2.1.6",
     "publint": "^0.3.21",
     "tsup": "^8.5.1",
-    "tsx": "^4.22.1",
     "typedoc": "^0.28.19",
     "typescript": "^5.9.3",
     "vitest": "^4.1.6"

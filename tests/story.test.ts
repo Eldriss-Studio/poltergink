@@ -34,6 +34,32 @@ describe("Story.fromInk", () => {
   });
 });
 
+describe("Story.fromJson", () => {
+  // Compile once and serialize so we can drive the .json codepath without
+  // depending on inklecate as a CLI.
+  function compiledJson(source: string): string {
+    // Round-trip via fromInk → snapshot is *state*-only; for full-story
+    // JSON we reach for inkjs's own ToJson on the compiled Story. We do
+    // that here (test-only) via the public package import path.
+    // biome-ignore lint/style/useImportType: runtime call needed
+    const { Compiler } = require("inkjs/full") as typeof import("inkjs/full");
+    const inkStory = new Compiler(source).Compile();
+    const json = inkStory.ToJson();
+    if (typeof json !== "string") throw new Error("ToJson returned non-string");
+    return json;
+  }
+
+  it("loads from compiled story JSON and advances identically to fromInk", () => {
+    const json = compiledJson(SIMPLE_INK);
+    const story = Story.fromJson(json);
+    const scene = story.advance();
+
+    expect(scene.text).toContain("Hello, world.");
+    expect(scene.choices).toHaveLength(2);
+    expect(scene.choices.map((c) => c.text)).toEqual(["Greet back", "Stay silent"]);
+  });
+});
+
 describe("Story.choose", () => {
   it("advances past the chosen branch", () => {
     const story = Story.fromInk(SIMPLE_INK);

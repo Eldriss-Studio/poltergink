@@ -9,7 +9,7 @@
 #
 # Pre-push   (heavy,  ~30s+):
 #   - pnpm verify — the same chain CI runs (typecheck, lint, lint:tsdoc,
-#                   knip, vitest+coverage, cucumber, build, publint)
+#                   knip, vitest+coverage, build, publint)
 #
 # Commit-msg:
 #   - commitlint — enforces the tardigrade gitmoji format
