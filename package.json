@@ -26,6 +26,10 @@
   "author": "Yuri Flagrare <yuri.flagrare@gmail.com>",
   "type": "module",
   "sideEffects": false,
+  "private": true,
+  "publishConfig": {
+    "access": "public"
+  },
   "exports": {
     ".": {
       "import": {
