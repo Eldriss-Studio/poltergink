@@ -9,7 +9,7 @@
 
 [ADR-0002](./0002-bootstrap-stack.md) picked `@cucumber/cucumber` as the ATDD framework, reading the user's "start from ATDD" brief as "Gherkin features + step definitions." After landing the first real feature (the `Story` facade), the cost showed up: Cucumber duplicated intent (Gherkin scenario + step-def glue both expressing the same assertions), required two test runners and two configs, hit an ESM-default-double-wrap bug in its own config loader, and produced step-def files that were largely typing ceremony over `assert`. The Vitest tests written in parallel covered the same behaviour in fewer lines, with one runner, and read just as much like a specification.
 
-The deeper question — *what does testing JS/TS well actually look like for a library?* — wasn't answered in ADR-0002. We answered it now by grounding the project in Kent C. Dodds's testing philosophy (Testing Trophy, "the more your tests resemble the way your software is used, the more confidence they can give you", test the public surface, no implementation details, no translation layer). The full philosophy as it applies here lives in agent memory at `~/.claude/projects/-home-flagrare-Dev-poltergink/memory/feedback_kent_dodds_testing.md`.
+The deeper question — *what does testing JS/TS well actually look like for a library?* — wasn't answered in ADR-0002. We answered it now by grounding the project in Kent C. Dodds's testing philosophy (Testing Trophy, "the more your tests resemble the way your software is used, the more confidence they can give you", test the public surface, no implementation details, no translation layer). The full working model lives in [`docs/testing-philosophy.md`](../testing-philosophy.md).
 
 ## Decision Drivers
 
@@ -90,7 +90,7 @@ Concrete deltas, executed in the same window as this ADR landing:
 
 ## More Information
 
-- Working model for testing: `~/.claude/projects/-home-flagrare-Dev-poltergink/memory/feedback_kent_dodds_testing.md` (Testing Trophy, public-API-only, mock at the boundary, AHA over beforeEach, behaviour-named tests).
+- Working model for testing: [`docs/testing-philosophy.md`](../testing-philosophy.md) — Testing Trophy, public-API-only, mock at the boundary, AHA over beforeEach, behaviour-named tests.
 - Kent's canonical posts:
   - <https://kentcdodds.com/blog/write-tests>
   - <https://kentcdodds.com/blog/testing-implementation-details>

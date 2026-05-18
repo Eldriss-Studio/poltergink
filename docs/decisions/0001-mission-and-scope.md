@@ -68,5 +68,3 @@ Inkle's [Ink](https://github.com/inkle/ink) is a one-sided narrative engine: an 
 ## More Information
 
 - Companion technical record: [ADR-0002: Bootstrap stack](./0002-bootstrap-stack.md).
-- Original consolidated plan (architecture and verification depth): `~/.claude/plans/okay-so-here-is-foamy-eich.md`.
-- Memory mirror: `~/.claude/projects/-home-flagrare-Dev-poltergink/memory/project_poltergink_v0_design.md`.

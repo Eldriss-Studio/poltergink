@@ -7,7 +7,7 @@
 
 ## Context and Problem Statement
 
-Given the mission set out in [ADR-0001](./0001-mission-and-scope.md) — an observable, narrative-faithful, multi-persona LLM player for Ink — we have to pick a coherent technology stack for v0 *before* writing any code. This ADR records that stack as one consolidated decision so subsequent material changes can each be a focused supersede. Detailed architecture lives in the plan file (`~/.claude/plans/okay-so-here-is-foamy-eich.md`); this ADR focuses on the *choices* and *why*.
+Given the mission set out in [ADR-0001](./0001-mission-and-scope.md) — an observable, narrative-faithful, multi-persona LLM player for Ink — we have to pick a coherent technology stack for v0 *before* writing any code. This ADR records that stack as one consolidated decision so subsequent material changes can each be a focused supersede. It focuses on the *choices* and *why*; the architecture (Facade/Strategy/State/Mediator+Observer) materialises as later commits across `src/`.
 
 ## Decision Drivers
 
@@ -100,7 +100,6 @@ Given the mission set out in [ADR-0001](./0001-mission-and-scope.md) — an obse
 ## More Information
 
 - Mission and scope: [ADR-0001](./0001-mission-and-scope.md).
-- Architecture and verification depth (Facade/Strategy/State/Mediator+Observer, repo layout, phased ATDD build order, `pnpm verify` contents): `~/.claude/plans/okay-so-here-is-foamy-eich.md`.
 - Provider package references:
   - Vercel AI SDK — <https://ai-sdk.dev>
   - `ollama-ai-provider` — <https://github.com/sgomez/ollama-ai-provider>
