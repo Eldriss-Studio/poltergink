@@ -23,12 +23,11 @@ coverage/
 # Vitest cache
 .vitest/
 
-# Cucumber output
-.cucumber/
-cucumber-report.*
-
 # tsup / esbuild
 .tsup/
+
+# Per-developer working directories (editor state, local tools).
+.claude/
 
 # TypeDoc generated output
 docs/api/
