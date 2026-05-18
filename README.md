@@ -7,7 +7,7 @@
 
 `poltergink` makes Inkle's [Ink](https://github.com/inkle/ink) narrative engine **two-sided**: instead of a human picking branches, an LLM holds a persona, reads the unfolding story, and is *forced* to pick from the author-defined `currentChoices`. No freeform text, no off-script generation — just constrained choice selection over a real narrative graph.
 
-> **Status:** Early development. The `Story` facade is shipped and tested. `Player`, `Persona`, `Session`, and `Transcript` are next.
+> **Status:** Early development. The `Story` facade, the `Player` interface with `ScriptedPlayer`, and the `Session` orchestrator loop are shipped and tested. `LLMPlayer`, `Persona`, and a full `Transcript` model are next.
 
 ## What's available
 
@@ -49,6 +49,33 @@ story.restore(saved);
 
 `StoryChoiceRangeError` carries `.attempted` and `.available` so callers can surface a clean error without parsing a message string.
 
+### `Player`, `ScriptedPlayer`, `Session` — the turn loop
+
+The `Session` orchestrator drives a `Story` through a `Player` until the story ends. `ScriptedPlayer` is the deterministic reference player used by tests and reproducible demos.
+
+```ts
+import { ScriptedPlayer, Session, Story } from "poltergink";
+
+const story = Story.fromInk(`
+  At the door.
+  * [Knock]   -> answered
+  * [Walk away] -> END
+  === answered ===
+  Someone opens. -> END
+`);
+
+const player = new ScriptedPlayer([0]); // pre-decided sequence of choice indices
+const session = new Session({ story, player });
+
+const result = await session.run();
+console.log(result.turns);       // [{ scene, decision }, …]
+console.log(result.finalScene);  // the ended scene (closing narrative, ended === true)
+```
+
+**`Player` contract.** Any implementation of `Player.selectChoice(ctx)` works — `ScriptedPlayer`, your own heuristic class, or the upcoming `LLMPlayer`. `ctx` carries the current `scene` plus the running `history` of completed `Turn`s; pass that history to an LLM as context, look at it in a heuristic player, or ignore it entirely. The return is a `Decision` — `{ choiceIndex, reasoning?, raw? }`.
+
+**`ScriptExhaustedError`** carries `.scriptLength` and `.turnIndex` so callers can pinpoint exactly where the script ran out.
+
 ### Tag-driven routing
 
 Ink tags flow through at two levels: passage tags appear on `Scene.tags` after each `advance()`; choice tags (written before the choice's bracketed text) appear on `Choice.tags` at decision time. The `PersonaDirector` (coming in v0) will read these to select a persona at the branch point.
@@ -64,9 +91,12 @@ A stranger approaches. # mood:tense
 ## Roadmap (v0)
 
 - [x] `Story` facade over `inkjs` — `.fromInk`, `.fromJson`, `.advance`, `.choose`, `.snapshot`, `.restore`
-- [ ] `Player` strategy — `LLMPlayer` (Vercel AI SDK + Zod-constrained output), `ScriptedPlayer`, `RandomPlayer`
+- [x] `Player` interface — `Player`, `TurnContext`, `Decision`, `Turn`
+- [x] `ScriptedPlayer` — deterministic, for tests and reproducible demos
+- [x] `Session` orchestrator — drives a `Story` × `Player` to completion, returns `SessionResult`
+- [ ] `LLMPlayer` — Vercel AI SDK + Zod-constrained output
 - [ ] `Persona` + `PersonaDirector` — tag-driven persona switching mid-session
-- [ ] `Session` orchestrator with an observable, immutable `Transcript` and typed turn events
+- [ ] `Transcript` — typed turn events, per-turn snapshots, replay
 - [ ] Astro Starlight docs site with TypeDoc-generated API reference
 
 ## Design references

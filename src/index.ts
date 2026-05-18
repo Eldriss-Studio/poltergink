@@ -10,6 +10,9 @@
  * @packageDocumentation
  */
 
+export type { Decision, Player, Turn, TurnContext } from "./player.ts";
+export { ScriptExhaustedError, ScriptedPlayer } from "./players/scripted.ts";
+export { Session, type SessionOptions, type SessionResult } from "./session.ts";
 export { type Choice, type Scene, Story, StoryChoiceRangeError } from "./story.ts";
 
 /**
