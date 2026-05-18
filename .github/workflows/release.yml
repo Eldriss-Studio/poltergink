@@ -37,8 +37,9 @@ jobs:
         uses: changesets/action@v1
         with:
           publish: pnpm release
-          title: "chore: release"
-          commit: "chore: release"
+          # Match commitlint's gitmoji format (see commitlint.config.js).
+          title: "🔖 release: version packages"
+          commit: "🔖 release: version packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
