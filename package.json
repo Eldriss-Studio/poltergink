@@ -1,6 +1,6 @@
 {
   "name": "poltergink",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "LLM-native TypeScript wrapper around inkjs — a poltergeist in the Ink shell. An LLM holds a persona, reads the narrative, and is forced to pick from author-defined choices.",
   "keywords": [
     "ink",
