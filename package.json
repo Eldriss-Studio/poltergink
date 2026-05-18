@@ -65,10 +65,8 @@
     "test:atdd": "NODE_OPTIONS='--import tsx/esm --no-warnings' cucumber-js --parallel 4",
     "knip": "knip",
     "publint": "publint",
-    "attw": "attw --pack --profile node16",
     "docs:api": "typedoc",
     "verify": "pnpm typecheck && pnpm lint && pnpm lint:tsdoc && pnpm knip && pnpm test:coverage && pnpm test:atdd && pnpm build && pnpm publint",
-    "verify:publish": "pnpm verify && pnpm attw",
     "changeset": "changeset",
     "release": "changeset publish",
     "prepare": "lefthook install"
@@ -99,7 +97,6 @@
     }
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "^0.18.2",
     "@biomejs/biome": "^2.4.15",
     "@changesets/cli": "^2.31.0",
     "@commitlint/cli": "^21.0.1",
